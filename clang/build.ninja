@@ -1,0 +1,6 @@
+cflags = -Wno-implicit-function-declaration -Wno-implicit-int
+
+rule c
+  command = clang $cflags $in -o $out
+
+build donut.exe: c a1k0n/donut.c

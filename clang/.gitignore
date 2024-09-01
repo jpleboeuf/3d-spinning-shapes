@@ -5,3 +5,7 @@
 # Executables
 *.exe
 *.out
+
+# Ninja output
+.ninja_deps
+.ninja_log
