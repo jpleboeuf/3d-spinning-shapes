@@ -3,4 +3,9 @@ cflags = -Wno-implicit-function-declaration -Wno-implicit-int
 rule c
   command = clang $cflags $in -o $out
 
+rule termrun
+  command = alacritty -o "window.dimensions.columns=80" -o "window.dimensions.lines=25" -o "colors.cursor.cursor='CellBackground'" -e "$in"
+
 build donut.exe: c a1k0n/donut.c
+
+build run: termrun donut.exe
