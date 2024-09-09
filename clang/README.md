@@ -5,7 +5,8 @@ Developed on Windows with:
   (in the Visual Studio Installer,
    select also "Desktop development with C++" on top of "MSBuild tools");
 - [Clang LLVM](https://clang.llvm.org/) (Windows MSVC);
-- [Ninja](https://ninja-build.org/) if you want an easy way to build the executables.
+- [Ninja](https://ninja-build.org/) if you want an easy way to build the executables;
+- [Alacritty](https://alacritty.org/) if you want smoother terminal display.
 
 # Build
 
@@ -23,5 +24,5 @@ A solution is to use [Alacritty](https://alacritty.org/) to launch a dedicated t
  with the cursor configured to be the same color as the background:
 
  ```sh
-alacritty -o "window.dimensions.columns=80" -o "window.dimensions.lines=25" -o "colors.cursor.cursor='CellBackground'" -e "donut.exe"
+alacritty -o "window.dimensions.columns=80" -o "window.dimensions.lines=25" -o "colors.cursor.cursor='CellBackground'" -e "donut"
  ```
