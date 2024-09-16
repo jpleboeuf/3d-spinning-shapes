@@ -9,3 +9,6 @@
 # Ninja output
 .ninja_deps
 .ninja_log
+
+# Generated C files
+donut_*.c

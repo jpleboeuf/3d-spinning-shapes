@@ -1,3 +1,6 @@
+# Currently this build file is mostly Windows-only.
+# It would have to be slightly modified to run with Bash.
+
 cflags = -Wno-implicit-function-declaration -Wno-implicit-int
 
 rule c
@@ -6,6 +9,18 @@ rule c
 rule termrun
   command = alacritty -o "window.dimensions.columns=80" -o "window.dimensions.lines=25" -o "colors.cursor.cursor='CellBackground'" -e "$in"
 
+rule prettify-format
+  command = cmd /k "clang-format $in > $out"
+rule prettify-remove-comments
+  command = cmd /k "clang -E -P $in -o $out"
+rule prettify-remove-extra-semicolons
+  command = cmd /k "copy $in $out > NUL && clang-tidy --extra-arg=-Wno-implicit-function-declaration --extra-arg=-Wno-implicit-int --checks=-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling --extra-arg=-Wextra-semi --extra-arg=-Wextra-semi-stmt --fix $out --"
+ 
 build donut.exe: c a1k0n/donut.c
+build run-donut: termrun donut.exe
 
-build run: termrun donut.exe
+build donut_remodeled.c: prettify-format a1k0n/donut.c
+build donut_remodeled_and_slimmed.c: prettify-remove-comments donut_remodeled.c
+build donut_dedonutized.c: prettify-remove-extra-semicolons donut_remodeled_and_slimmed.c
+build donut_dedonutized.exe: c donut_dedonutized.c
+build run-donut_dedonutized: termrun donut_dedonutized.exe
