@@ -83,11 +83,16 @@ However, Clang-Tidy is by default even more capricious about unsafe code than th
  therefore, not only the same warnings/errors have to be disabled (see the "Build" section in [the README in the `a1k0n` sub-directory](a1k0n/README.md)),
  but also the deprecated use of `memset` has to be confirmed.
 
-Also, Clang-tidy works in-place, therefore the source file has to be copied before being processed.
+After tidying, the file has to be formatted again with ClangFormat
+ because Clang-Tidy introduces empty lines when fixing extra semicolons;
+ this can be done in-place.
+
+Also, Clang-Tidy works in-place, therefore the source file has to be copied before being processed.
 
 ```sh
 copy donut_remodeled_and_slimmed.c donut_dedonutized.c
 clang-tidy --extra-arg=-Wno-implicit-function-declaration --extra-arg=-Wno-implicit-int -checks=-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling --extra-arg=-Wextra-semi-stmt -fix donut_dedonutized.c --
+clang-format --style="{MaxEmptyLinesToKeep: 0}" -i donut_dedonutized.c
 ```
 
 (For the `--` of the last command line, see "[How to use and configure clang-tidy on windows?](https://stackoverflow.com/questions/52710180/how-to-use-and-configure-clang-tidy-on-windows)" on Stack Overflow.)

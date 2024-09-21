@@ -14,7 +14,7 @@ rule prettify-format
 rule prettify-remove-comments
   command = cmd /k "clang -E -P $in -o $out"
 rule prettify-remove-extra-semicolons
-  command = cmd /k "copy $in $out > NUL && clang-tidy --extra-arg=-Wno-implicit-function-declaration --extra-arg=-Wno-implicit-int --checks=-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling --extra-arg=-Wextra-semi --extra-arg=-Wextra-semi-stmt --fix $out --"
+  command = cmd /k "copy $in $out > NUL && clang-tidy --extra-arg=-Wno-implicit-function-declaration --extra-arg=-Wno-implicit-int --checks=-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling --extra-arg=-Wextra-semi --extra-arg=-Wextra-semi-stmt --fix $out -- && clang-format --style="{MaxEmptyLinesToKeep: 0}" -i $out"
  
 build donut.exe: c a1k0n/donut.c
 build run-donut: termrun donut.exe
